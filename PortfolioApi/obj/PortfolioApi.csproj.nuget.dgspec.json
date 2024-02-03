@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Samy\\WebstormProjects\\portfolio\\Api\\PortfolioApiApp\\PortfolioApi\\PortfolioApi.csproj": {}
+    "C:\\Users\\Samy\\WebstormProjects\\portfolio\\PortfolioAPI\\PortfolioApi\\PortfolioApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Samy\\WebstormProjects\\portfolio\\Api\\PortfolioApiApp\\PortfolioApi\\PortfolioApi.csproj": {
+    "C:\\Users\\Samy\\WebstormProjects\\portfolio\\PortfolioAPI\\PortfolioApi\\PortfolioApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Samy\\WebstormProjects\\portfolio\\Api\\PortfolioApiApp\\PortfolioApi\\PortfolioApi.csproj",
+        "projectUniqueName": "C:\\Users\\Samy\\WebstormProjects\\portfolio\\PortfolioAPI\\PortfolioApi\\PortfolioApi.csproj",
         "projectName": "PortfolioApi",
-        "projectPath": "C:\\Users\\Samy\\WebstormProjects\\portfolio\\Api\\PortfolioApiApp\\PortfolioApi\\PortfolioApi.csproj",
+        "projectPath": "C:\\Users\\Samy\\WebstormProjects\\portfolio\\PortfolioAPI\\PortfolioApi\\PortfolioApi.csproj",
         "packagesPath": "C:\\Users\\Samy\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Samy\\WebstormProjects\\portfolio\\Api\\PortfolioApiApp\\PortfolioApi\\obj\\",
+        "outputPath": "C:\\Users\\Samy\\WebstormProjects\\portfolio\\PortfolioAPI\\PortfolioApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Samy\\AppData\\Roaming\\NuGet\\NuGet.Config",

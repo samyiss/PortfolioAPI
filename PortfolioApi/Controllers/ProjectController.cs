@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PortfolioApi.Models;
 
@@ -8,7 +8,7 @@ namespace PortfolioApi.Controllers;
 [ApiController]
 public class ProjectController(AppDbContext context) : ControllerBase
 {
-
+    private const string Value = """Projects done not found""";
     private readonly AppDbContext _context = context;
 
     // GET: api/projects
