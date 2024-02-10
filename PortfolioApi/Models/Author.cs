@@ -6,7 +6,6 @@ namespace PortfolioApi.Models
     {
         public int author_id { get; set; }
         public string? name { get; set; }
-        public string? giturl { get; set; }
         [JsonIgnore] public List<Authors_Projects>? authors_projects { get; }
     }
 }
