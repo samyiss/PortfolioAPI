@@ -12,6 +12,7 @@ public class AppDbContext : DbContext
     public DbSet<Author> authors { get; set; }
     public DbSet<Authors_Projects> tags_projects { get; set; }
     public DbSet<Authors_Projects> authors_projects { get; set; }
+    public DbSet<Gallery> gallery { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -19,6 +20,7 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Tag>().HasKey(p => p.tag_id);
         modelBuilder.Entity<Author>().HasKey(p => p.author_id);
         modelBuilder.Entity<Picture>().HasKey(p => p.picture_id);
+        modelBuilder.Entity<Gallery>().HasKey(p => p.gallery_id);
 
         modelBuilder.Entity<Authors_Projects>().HasKey(bc => new { bc.project_id, bc.author_id });
         modelBuilder.Entity<Tags_Projects>().HasKey(bc => new { bc.project_id, bc.tag_id });
