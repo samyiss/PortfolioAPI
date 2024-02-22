@@ -1,6 +1,7 @@
 ﻿using Firebase.Storage;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using PortfolioApi.Models;
 using PortfolioApi.Models.WebApplication5.Controllers;
 
@@ -74,26 +75,48 @@ public class GalleryController(AppDbContext context) : ControllerBase
         return downloadUrl;
     }
 
-    // GET api/Gallery/{type}
-    [HttpGet("{type}")]
-    public async Task<ActionResult<List<Gallery>>> GetPicturesByType(string type)
+    // GET api/Gallery
+    [HttpGet]
+    public async Task<IActionResult> GetPicturesByType()
     {
         try
         {
-            var pictures = await _context.gallery
-                .Where(p => p.description == type)
-                .ToListAsync();
+            var pictures = await _context.gallery.ToListAsync();
 
-            if (pictures == null || pictures.Count == 0)
+            if (pictures == null || !pictures.Any())
             {
-                return NotFound("Pictures not found");
+                return NotFound("No pictures found");
             }
 
-            return pictures;
+            var groupedPictures = pictures.GroupBy(p => p.description)
+                                          .ToDictionary(g => g.Key, g => g.ToList());
+
+            // Serialize the grouped pictures to JSON
+            string json = JsonConvert.SerializeObject(groupedPictures, Formatting.Indented);
+
+            // Specify the file path
+            string downloadsFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Downloads";
+            string filePath = Path.Combine(downloadsFolder, $"GalleryData.json");
+
+            // Check if file exists, and delete if it does
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+
+            // Write the JSON to a file
+            await System.IO.File.WriteAllTextAsync(filePath, json);
+
+            // Return the file as a response
+            byte[] fileBytes = await System.IO.File.ReadAllBytesAsync(filePath);
+            File(fileBytes, "application/json", $"GalleryData.json");
+
+            return Ok("File uploaded successfully in your DOWNLOADS file");
         }
         catch (Exception ex)
         {
             return StatusCode(500, $"Internal server error: {ex.Message}");
         }
     }
+
 }
