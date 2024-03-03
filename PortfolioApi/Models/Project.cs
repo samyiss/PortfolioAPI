@@ -9,9 +9,9 @@ namespace PortfolioApi.Models
         [Required(ErrorMessage = "Please provide a valid project ID")]
         public int project_id { get; set; }
         public required string name { get; set; }
+        public required string date_project { get; set; }
+
         public required string description { get; set; }
-        public required string learning { get; set; }
-        public required string challenges { get; set; }
         [NotMapped] public List<Author>? authors { get; set; }
         [NotMapped] public List<Tag>? tags { get; set; }
         #pragma warning disable CS8618

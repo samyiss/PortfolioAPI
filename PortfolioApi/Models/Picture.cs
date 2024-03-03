@@ -8,8 +8,6 @@ namespace PortfolioApi.Models
     {
         [JsonIgnore] public int? picture_id { get; set; }
         public required string picture { get; set; }
-        public string description { get; set; } = string.Empty;
-        public string date { get; } = string.Empty;
     }
 }
 

@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using PortfolioApi.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace PortfolioApi.Controllers;
 
@@ -13,7 +15,7 @@ public class ProjectController(AppDbContext context) : ControllerBase
 
     // GET: api/projects
     [HttpGet]
-    public ActionResult<List<Project>> Get()
+    public async Task<IActionResult> Get()
     {
         var response = new ApiResponse();
 
@@ -37,16 +39,38 @@ public class ProjectController(AppDbContext context) : ControllerBase
                     author_id = d.authors.author_id,
                     name = d.authors.name,
                 }).ToList();
+                p.authors_projects.Clear();
 
                 p.tags = p.Tags_projects.Select(d => new Tag
                 {
                     tag_id = d.tags.tag_id,
                     name = d.tags.name,
                 }).ToList();
+                p.Tags_projects.Clear();
             });
 
 
-            return projects;
+            var json = JsonConvert.SerializeObject(projects , Formatting.Indented);
+
+            // Specify the file path
+            string downloadsFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Downloads";
+            string filePath = Path.Combine(downloadsFolder, $"ProjectsData.json");
+
+            // Check if file exists, and delete if it does
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+
+            // Write the JSON to a file
+            await System.IO.File.WriteAllTextAsync(filePath, json);
+
+            // Return the file as a response
+            byte[] fileBytes = await System.IO.File.ReadAllBytesAsync(filePath);
+            File(fileBytes, "application/json", $"ProjectsData.json");
+
+            return Ok("File uploaded successfully in your DOWNLOADS file");
+
         }
     }
 
@@ -100,9 +124,8 @@ public class ProjectController(AppDbContext context) : ControllerBase
                 var newProject = new Project
                 {
                     name = project.name,
+                    date_project = project.date_project,
                     description = project.description,
-                    learning = project.learning,
-                    challenges = project.challenges,
                     giturl = project.giturl,
                     pictures = project.pictures,
                     apiurl = project.apiurl,
@@ -203,9 +226,8 @@ public class ProjectController(AppDbContext context) : ControllerBase
 
             // Update project properties
             projectToUpdate.name = project.name;
+            projectToUpdate.date_project = project.date_project;
             projectToUpdate.description = project.description;
-            projectToUpdate.learning = project.learning;
-            projectToUpdate.challenges = project.challenges;
             projectToUpdate.giturl = project.giturl;
             projectToUpdate.apiurl = project.apiurl;
 
